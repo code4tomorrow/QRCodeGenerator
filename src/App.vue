@@ -23,6 +23,7 @@ export default {
   data: () => {
     return {
       currentURL: "https://github.com/code4tomorrow/javascript",
+      str: "",
     };
   },
   mounted() {},
