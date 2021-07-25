@@ -1,31 +1,34 @@
 <template>
   <div class="history">
-    <button @click="saveUrls()">Send to History</button>
-    <input v-model="currentURL"/>
+    <QRUrlItem
+      v-for="(url, index) in urlList"
+      :key="url + index"
+      :url="url"
+      @setCurrentURL="setCurrentURL"
+    />
   </div>
-
 </template>
 
 <script>
+import QRUrlItem from "@/components/QRUrlItem.vue";
+
 export default {
-  data: () => {
-    return {
-      urlList: JSON.parse(localStorage.getItem("URLs")) || [],
-      currentURL: "https://github.com/code4tomorrow/javascript",
-    }
-  },
-  created() {
-    
+  props: ["urlList"],
+  components: {
+    QRUrlItem,
   },
   methods: {
-    saveUrls() {
-      this.urlList.unshift(this.currentURL)
-      localStorage.setItem("URLs", JSON.stringify(this.urlList))
-    }
-  }
+    setCurrentURL(url) {
+      this.$emit("setCurrentURL", url);
+    },
+  },
 };
-
 </script>
 
-<style>
+<style scoped>
+.history {
+  width: 50%;
+  height: 85vh;
+  overflow-x: auto;
+}
 </style>
